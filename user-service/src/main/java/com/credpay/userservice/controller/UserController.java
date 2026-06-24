@@ -1,8 +1,10 @@
 package com.credpay.userservice.controller;
 
 import com.credpay.userservice.dto.LoginRequest;
+import com.credpay.userservice.dto.LoginResponse;
 import com.credpay.userservice.dto.MessageResponse;
 import com.credpay.userservice.dto.RegisterRequest;
+import com.credpay.userservice.entity.User;
 import com.credpay.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<MessageResponse> login(@Valid @RequestBody LoginRequest request) {
-        userService.login(request);
-        return ResponseEntity.ok(new MessageResponse("Login successful"));
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        User user = userService.login(request);
+        return ResponseEntity.ok(new LoginResponse(
+                user.getId(),
+                user.getFullName(),
+                user.getEmail(),
+                "Login successful"
+        ));
     }
 }

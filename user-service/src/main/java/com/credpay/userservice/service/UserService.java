@@ -42,15 +42,18 @@ public class UserService {
     /**
      * Verifies email exists and the password matches the stored value.
      *
+     * @return the authenticated user (for building the login response)
      * @throws InvalidCredentialsException if email is unknown or password is wrong
      */
     @Transactional(readOnly = true)
-    public void login(LoginRequest request) {
+    public User login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new InvalidCredentialsException("Invalid email or password"));
 
         if (!user.getPasswordHash().equals(request.getPassword())) {
             throw new InvalidCredentialsException("Invalid email or password");
         }
+
+        return user;
     }
 }

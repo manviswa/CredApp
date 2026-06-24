@@ -111,9 +111,19 @@ Verifies the email exists and the password matches. No JWT is issued.
 
 ```json
 {
+  "userId": 3,
+  "fullName": "Bharath Reddy",
+  "email": "bharath@test.com",
   "message": "Login successful"
 }
 ```
+
+| Field | Type | Description |
+|---|---|---|
+| userId | number | ID of the authenticated user |
+| fullName | string | User's full name |
+| email | string | User's email |
+| message | string | Always `"Login successful"` |
 
 ### Error Responses
 

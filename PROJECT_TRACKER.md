@@ -96,7 +96,7 @@ Status: IN PROGRESS (Register + Login + Card APIs implemented)
 Tasks:
 
 * Register API - DONE (POST /api/users/register)
-* Login API - DONE (POST /api/users/login)
+* Login API - DONE (POST /api/users/login, returns userId/fullName/email/message)
 * Add Card API - DONE (POST /api/cards/add, stores masked number)
 * List Card API - DONE (GET /api/cards/user/{userId})
 
