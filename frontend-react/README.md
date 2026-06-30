@@ -97,3 +97,76 @@ login the app stores `userId`, `fullName`, and `email` in `localStorage`.
 npm run build      # outputs to dist/
 npm run preview    # preview the production build
 ```
+
+## Docker
+
+The app is shipped as a **multi-stage** image: Node builds the static bundle,
+then **Nginx** serves the `dist/` output. The final image contains no Node.js,
+no `node_modules`, and no source — just Nginx + compiled static files. It is
+portable across Docker Desktop, Docker Hub, ACR and AKS without modification.
+
+> Run all commands from the `frontend-react/` directory (where the `Dockerfile` is).
+
+### 1. Build the image
+
+```bash
+docker build -t credpay-frontend:v1 .
+```
+
+### 2. Verify the image exists
+
+```bash
+docker images
+```
+
+### 3. Run the container
+
+```bash
+docker run -d --name credpay-frontend -p 3000:80 credpay-frontend:v1
+```
+
+### 4. Verify the container is running
+
+```bash
+docker ps
+```
+
+### 5. View logs
+
+```bash
+docker logs credpay-frontend
+```
+
+### 6. Access the application
+
+```
+http://localhost:3000
+```
+
+### 7. Stop the container
+
+```bash
+docker stop credpay-frontend
+```
+
+### 8. Remove the container
+
+```bash
+docker rm credpay-frontend
+```
+
+### 9. Remove the image
+
+```bash
+docker rmi credpay-frontend:v1
+```
+
+### Notes
+
+- Nginx is configured (`nginx.conf`) for SPAs: unknown routes fall back to
+  `index.html` (so `/dashboard` and browser refresh work), gzip is enabled,
+  hashed assets under `/assets` are cached for a year, and directory listing
+  is disabled.
+- The container serves a **static build**. API base URLs are baked in at build
+  time from Vite env vars (`VITE_USER_API_URL`, `VITE_PAYMENT_API_URL`); to
+  point at different backends, rebuild with those values set.

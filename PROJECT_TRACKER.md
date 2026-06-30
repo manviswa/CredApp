@@ -171,7 +171,10 @@ Tasks:
 
 [ ] GitHub Repository
 
-[ ] Dockerfiles
+[~] Dockerfiles (user-service: multi-stage, eclipse-temurin:21-jre-alpine - DONE;
+    payment-service: python:3.14-slim, non-root, uvicorn ENTRYPOINT - DONE;
+    frontend-react: multi-stage node:22-alpine -> nginx:stable-alpine SPA, ~93MB,
+    built + smoke-tested (/ and /dashboard -> 200) - DONE; gateway pending)
 
 [ ] Docker Compose
 
